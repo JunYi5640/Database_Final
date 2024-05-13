@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `customerinteractions` (
   `Mode` enum('Email','Phone','In-Person') NOT NULL,
   `Description` text NOT NULL,
   PRIMARY KEY (`InteractionID`),
-  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE NO ACTION ON UPDATE CASCADE
+  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `salesorders` (
   `PaymentStatus` enum('Unpaid','Paid') NOT NULL,
   `DeliveryStatus` enum('Pending','Shipped','Delivered') NOT NULL,
   PRIMARY KEY (`OrderID`),
-  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE NO ACTION ON UPDATE CASCADE
+  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `orderdetails` (
   `Quantity` int(10) NOT NULL,
   `Price` int(10) NOT NULL,
   FOREIGN KEY (`OrderID`) REFERENCES salesorders(OrderID) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`ProductID`) REFERENCES products(ProductID) ON DELETE NO ACTION ON UPDATE CASCADE
+  FOREIGN KEY (`ProductID`) REFERENCES products(ProductID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -120,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `servicerequests` (
   `ResolutionDate` date NOT NULL,
   `Status` enum('Submitted','In Progress','Completed') NOT NULL,
   PRIMARY KEY (`RequestID`),
-  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE NO ACTION ON UPDATE CASCADE,
-  FOREIGN KEY (`ProductID`) REFERENCES products(ProductID) ON DELETE NO ACTION ON UPDATE CASCADE
+  FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`ProductID`) REFERENCES products(ProductID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;
