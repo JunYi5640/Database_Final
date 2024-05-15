@@ -10,7 +10,7 @@
 
     $table = "products";
     
-    $ProductId = $_REQUEST['ProductId'];
+    $ProductID = $_REQUEST['ProductID'];
     $Name = $_REQUEST['Name'];
     $Description = $_REQUEST['Description'];
     $Price = $_REQUEST['Price'];
@@ -19,7 +19,7 @@
 
     $sql = "UPDATE $table SET Name = '$Name', Description = '$Description', Price = '$Price',
              StockQuantity = '$StockQuantity',  CategoryID = '$CategoryID'
-             WHERE ProductId = $ProductId";
+             WHERE ProductID = $ProductID";
              
     session_start();
     if($db->query($sql) === TRUE)   $_SESSION['status'] = TRUE;

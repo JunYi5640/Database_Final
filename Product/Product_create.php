@@ -9,6 +9,8 @@
     else    /*echo "Connection Successful"*/;
 
     $table = "products";
+    
+    
     $Name = $_REQUEST['Name'];
     $Description = $_REQUEST['Description'];
     $Price = $_REQUEST['Price'];

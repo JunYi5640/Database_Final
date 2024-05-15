@@ -1,4 +1,4 @@
-<?php
+CustomerID<?php
     $host = "localhost";
     $username = "root";
     $password = "";
@@ -39,26 +39,34 @@
 			Email: <input type="text" name="Email"><br>
 			PhoneNumber: <input type="text" name="PhoneNumber"><br>
 			Address: <input type="text" name="Address"><br>
-			RegistrationDate: <input type="text" name="RegistrationDate"><br>
-			CustomerType: <input type="text" name="CustomerType"><br>
+			RegistrationDate: <input type="date" name="RegistrationDate"><br>
+			CustomerType: <br>
+			<input type="radio" name="CustomerType" value="Individual" checked />
+    		<label for="Individual">Individual</label><br>
+			<input type="radio" name="CustomerType" value="Corporate" />
+    		<label for="Corporate">Corporate</label><br>
 			<input type="submit" value="Create"><br>
 		</form>
 	
 		<h3>Delete Customer</h3>
 			<form action="Customer_delete.php" method="post">
-			ID: <input type="text" name="CustomerId"><br>
+			ID: <input type="text" name="CustomerID"><br>
 			<input type="submit" value="Delete"><br>
 		</form>
 	
 		<h3>Update Customer</h3>
         <form action="Customer_update.php" method="post">
-			ID: <input type="text" name="CustomerId"><br>
+			ID: <input type="text" name="CustomerID"><br>
 			Name: <input type="text" name="Name"><br>
-			Email<input type="text" name="Email"><br>
+			Email: <input type="text" name="Email"><br>
 			PhoneNumber: <input type="text" name="PhoneNumber"><br>
 			Address: <input type="text" name="Address"><br>
-			RegistrationDate: <input type="text" name="RegistrationDate"><br>
-			CustomerType: <input type="text" name="CustomerType"><br>
+			RegistrationDate: <input type="date" name="RegistrationDate"><br>
+			CustomerType: <br>
+			<input type="radio" name="CustomerType" value="Individual" checked />
+    		<label for="Individual">Individual</label><br>
+			<input type="radio" name="CustomerType" value="Corporate" />
+    		<label for="Corporate">Corporate</label><br>
 			<input type="submit" value="Update"><br>
 		</form>
 
@@ -69,12 +77,12 @@
 		<thead>
 			<tr>
 				<th scope="col">Customer ID.</th>
-				<th scope="col">Customer Name.</th>
-				<th scope="col">Customer Email.</th>
-				<th scope="col">Customer PhoneNumber.</th>
-				<th scope="col">Customer Address.</th>
-				<th scope="col">Customer RegistrationDate.</th>
-				<th scope="col">Customer CustomerType.</th>
+				<th scope="col">Name.</th>
+				<th scope="col">Email.</th>
+				<th scope="col">Phone Number.</th>
+				<th scope="col">Address.</th>
+				<th scope="col">Registration Date.</th>
+				<th scope="col">Customer Type.</th>
 			</tr>
 		</thead>
 		<tbody>

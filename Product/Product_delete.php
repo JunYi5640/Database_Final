@@ -10,9 +10,9 @@
 
     $table = "products";
 
-    $ProductId = $_REQUEST['ProductId'];
+    $ProductID = $_REQUEST['ProductID'];
     
-    $sql = "DELETE FROM $table WHERE ProductId = '$ProductId'";
+    $sql = "DELETE FROM $table WHERE ProductID = '$ProductID'";
 
     session_start();
     if($db->query($sql) === TRUE)   $_SESSION['status'] = TRUE;

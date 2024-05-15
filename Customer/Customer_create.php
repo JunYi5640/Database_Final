@@ -9,6 +9,7 @@
     else    /*echo "Connection Successful"*/;
 
     $table = "customers";
+    
     $Name = $_REQUEST['Name'];
     $Email = $_REQUEST['Email'];
     $PhoneNumber = $_REQUEST['PhoneNumber'];
