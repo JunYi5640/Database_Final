@@ -8,16 +8,16 @@
     if($db->connect_error)  die("Connection Failed ". $db->connect_error);
     else    /*echo "Connection Successful"*/;
 
-    $table = "customers";
+    $table = "products";
 
-    $CustomerId = $_REQUEST['CustomerId'];
+    $ProductId = $_REQUEST['ProductId'];
     
-    $sql = "DELETE FROM $table WHERE CustomerId = '$CustomerId'";
+    $sql = "DELETE FROM $table WHERE ProductId = '$ProductId'";
 
     session_start();
     if($db->query($sql) === TRUE)   $_SESSION['status'] = TRUE;
     else $_SESSION['status'] = FALSE;
 
     $db->close();
-    header("Location: Customer_mainpage.php");
+    header("Location: Product_mainpage.php");
 ?>

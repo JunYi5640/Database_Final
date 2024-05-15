@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `Address` varchar(255) NOT NULL,
   `RegistrationDate` date NOT NULL,
   `CustomerType` enum('Individual','Corporate') NOT NULL,
-  PRIMARY KEY (`CustomerID`)
+  PRIMARY KEY (`CustomerID`),
+  UNIQUE(`Email`, `PhoneNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
