@@ -15,7 +15,7 @@
     $Quantity = $_REQUEST['Quantity'];
     $Price = $_REQUEST['Price'];
 
-    $sql = "UPDATE $table SET ProductID = '$ProductID', Quantity = '$Quantity', Price = '$Price',
+    $sql = "UPDATE $table SET ProductID = '$ProductID', Quantity = '$Quantity', Price = '$Price'
              WHERE OrderID = $OrderID";
              
     session_start();

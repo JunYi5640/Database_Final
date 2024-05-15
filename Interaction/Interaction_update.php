@@ -17,7 +17,7 @@
     $Description = $_REQUEST['Description'];
     
     $sql = "UPDATE $table SET CustomerID = '$CustomerID', Date = '$Date', Mode = '$Mode',
-             Description = '$Description
+             Description = '$Description'
              WHERE InteractionID = $InteractionID";
              
     session_start();

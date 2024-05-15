@@ -19,7 +19,7 @@
 
 
     $sql = "INSERT INTO $table(CustomerID, ProductID, IssueDescription, RequestDate, ResolutionDate, Status)
-            VALUES('$CustomerID', '$ProductID', '$IssueDescription', '$RequestDate', NULL, '$Status')";
+            VALUES('$CustomerID', '$ProductID', '$IssueDescription', '$RequestDate', '$ResolutionDate', '$Status')";
 
     session_start();
     if($db->query($sql) === TRUE)   $_SESSION['status'] = TRUE;

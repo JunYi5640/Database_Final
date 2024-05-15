@@ -1,4 +1,4 @@
-CustomerID<?php
+<?php
     $host = "localhost";
     $username = "root";
     $password = "";
@@ -67,7 +67,6 @@ CustomerID<?php
 			<input type="radio" name="Mode" value="In-Person" />
     		<label for="In-Person">In-Person</label><br>
 			Description: <input type="text" name="Description"><br>
-			<input type="submit" value="Create"><br>
 			<input type="submit" value="Update"><br>
 		</form>
 
