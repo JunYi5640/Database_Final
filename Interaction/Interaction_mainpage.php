@@ -35,39 +35,17 @@
 
 		<h3>Create Interaction</h3>
 		<form action="Interaction_create.php" method="post">
-			CustomerID: <input type="text" name="CustomerID"><br>
-			Date: <input type="date" name="Date"><br>
+			CustomerID: <input type="text" name="CustomerID"><br><br>
+			Date: <input type="date" name="Date"><br><br>
 			Mode: <br>
 			<input type="radio" name="Mode" value="Email" checked />
     		<label for="Email">Email</label><br>
 			<input type="radio" name="Mode" value="Phone" />
     		<label for="Phone">Phone</label><br>
 			<input type="radio" name="Mode" value="In-Person" />
-    		<label for="In-Person">In-Person</label><br>
-			Description: <input type="text" name="Description"><br>
+    		<label for="In-Person">In-Person</label><br><br>
+			Description: <input type="text" name="Description"><br><br>
 			<input type="submit" value="Create"><br>
-		</form>
-	
-		<h3>Delete Interaction</h3>
-			<form action="Interaction_delete.php" method="post">
-			ID: <input type="text" name="InteractionID"><br>
-			<input type="submit" value="Delete"><br>
-		</form>
-	
-		<h3>Update Interaction</h3>
-        <form action="Interaction_update.php" method="post">
-			ID: <input type="text" name="InteractionID"><br>
-			CustomerID: <input type="text" name="CustomerID"><br>
-			Date: <input type="date" name="Date"><br>
-			Mode: <br>
-			<input type="radio" name="Mode" value="Email" checked />
-    		<label for="Email">Email</label><br>
-			<input type="radio" name="Mode" value="Phone" />
-    		<label for="Phone">Phone</label><br>
-			<input type="radio" name="Mode" value="In-Person" />
-    		<label for="In-Person">In-Person</label><br>
-			Description: <input type="text" name="Description"><br>
-			<input type="submit" value="Update"><br>
 		</form>
 
 		<br>
@@ -76,7 +54,7 @@
 		<table border="1" cellspacing="0" cellpadding="15">
 		<thead>
 			<tr>
-				<th scope="col">InteractionID ID.</th>
+				<th scope="col">Interaction ID.</th>
 				<th scope="col">CustomerID.</th>
 				<th scope="col">Date.</th>
 				<th scope="col">Mode.</th>

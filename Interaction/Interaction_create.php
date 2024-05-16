@@ -15,8 +15,14 @@
     $Mode = $_REQUEST['Mode'];
     $Description = $_REQUEST['Description'];
 
-    $sql = "INSERT INTO $table(CustomerID, Date, Mode, Description)
-            VALUES('$CustomerID', '$Date', '$Mode', '$Description')";
+    if(strlen($Date) == 0){
+        $sql = "INSERT INTO $table(CustomerID, Mode, Description)
+                VALUES('$CustomerID', '$Mode', '$Description')";
+    }
+    else{
+        $sql = "INSERT INTO $table(CustomerID, Date, Mode, Description)
+                VALUES('$CustomerID', '$Date', '$Mode', '$Description')";
+    }
 
     session_start();
     if($db->query($sql) === TRUE)   $_SESSION['status'] = TRUE;
