@@ -34,7 +34,7 @@
         <!-- Table Display -->
 		<h3>Customer Table</h3>
 
-        <form action="Delete.php" method="post">
+        <form action="Buttom_Process.php" method="post">
             <table border="1" cellspacing="0" cellpadding="15">
 		    <thead>
 			    <tr>
@@ -68,7 +68,8 @@
             }
         ?>
             </table>
-            <input type="submit" name="submit" value="submit">
+            <input type="submit" name="delete" value="delete">
+            <input type="submit" name="update" value="update">
         </form>
 	</body>
 </html>
