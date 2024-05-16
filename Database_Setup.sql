@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
 CREATE TABLE IF NOT EXISTS `customerinteractions` (
   `InteractionID` int(10) NOT NULL AUTO_INCREMENT,
   `CustomerID` int(10) NOT NULL,
-  `Date` date NOT NULL,
+  `Date` date NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Mode` enum('Email','Phone','In-Person') NOT NULL,
   `Description` text,
   PRIMARY KEY (`InteractionID`),
