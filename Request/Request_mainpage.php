@@ -33,28 +33,9 @@
     <body>
     	<h2>M11202108 Database_Final</h2>
 
-		<h3>Create Request</h3>
-		<form action="Request_create.php" method="post">
-			CustomerID: <input type="text" name="CustomerID"><br>
-			ProductID: <input type="text" name="ProductID"><br>
-			IssueDescription: <input type="text" name="IssueDescription"><br>
-			RequestDate: <input type="date" name="RequestDate"><br>
-			ResolutionDate: <input type="date" name="ResolutionDate"><br>
-			Status: <br>
-			<input type="radio" name="Status" value="Submitted" checked />
-    		<label for="Submitted">Submitted</label><br>
-			<input type="radio" name="Status" value="In Progress" />
-    		<label for="In Progress">In Progress</label><br>
-			<input type="radio" name="Status" value="Completed" />
-    		<label for="Completed">Completed</label><br>
-			<input type="submit" value="Create"><br>
-		</form>
-	
-		<h3>Delete Request</h3>
-			<form action="Request_delete.php" method="post">
-			ID: <input type="text" name="RequestID"><br>
-			<input type="submit" value="Delete"><br>
-		</form>
+		<h3>Search Request by CustomerID or ProductID print on table (input blank)</h3>
+
+		<h3>Search Request by CustomerID or ProductID print on table (buttom)</h3>
 	
 		<h3>Update Request</h3>
         <form action="Request_update.php" method="post">
@@ -76,7 +57,7 @@
 
 		<br>
 
-		<h3>Customer Table</h3>
+		<h3>Request Table</h3>
 		<table border="1" cellspacing="0" cellpadding="15">
 		<thead>
 			<tr>
