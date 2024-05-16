@@ -49,7 +49,7 @@
 		</form>
 	
 		<h3>Delete Customer</h3>
-			<form action="Customer_delete.php" method="post">
+		<form action="Customer_delete.php" method="post">
 			ID: <input type="text" name="CustomerID"><br>
 			<input type="submit" value="Delete"><br>
 		</form>
