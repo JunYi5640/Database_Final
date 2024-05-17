@@ -14,7 +14,7 @@
     $table = "customers";
 
     try{
-        foreach($_POST['customers'] as $customerID){
+        foreach($_POST['customersID'] as $customerID){
             $sql = "DELETE FROM $table WHERE CustomerID = '$customerID'";
             if($db->query($sql) === FALSE){
                 throw new Exception();
