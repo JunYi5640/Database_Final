@@ -35,7 +35,9 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `Address` varchar(255) NOT NULL,
   `RegistrationDate` date NOT NULL,
   `CustomerType` enum('Individual','Corporate') NOT NULL,
-  PRIMARY KEY (`CustomerID`)
+  PRIMARY KEY (`CustomerID`),
+  UNIQUE (`Email`),
+  UNIQUE (`PhoneNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -49,9 +51,9 @@ CREATE TABLE IF NOT EXISTS `customers` (
 CREATE TABLE IF NOT EXISTS `customerinteractions` (
   `InteractionID` int(10) NOT NULL AUTO_INCREMENT,
   `CustomerID` int(10) NOT NULL,
-  `Date` date NOT NULL,
+  `Date` date NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Mode` enum('Email','Phone','In-Person') NOT NULL,
-  `Description` text NOT NULL,
+  `Description` text,
   PRIMARY KEY (`InteractionID`),
   FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `salesorders` (
 CREATE TABLE IF NOT EXISTS `products` (
   `ProductID` int(10) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
-  `Description` text NOT NULL,
+  `Description` text,
   `Price` int(10) NOT NULL,
   `StockQuantity` int(10) NOT NULL,
   `CategoryID` int(10) NOT NULL,
@@ -115,9 +117,9 @@ CREATE TABLE IF NOT EXISTS `servicerequests` (
   `RequestID` int(10) NOT NULL AUTO_INCREMENT,
   `CustomerID` int(10) NOT NULL,
   `ProductID` int(10) NOT NULL,
-  `IssueDescription` text NOT NULL,
+  `IssueDescription` text,
   `RequestDate` date NOT NULL,
-  `ResolutionDate` date NOT NULL,
+  `ResolutionDate` date,
   `Status` enum('Submitted','In Progress','Completed') NOT NULL,
   PRIMARY KEY (`RequestID`),
   FOREIGN KEY (`CustomerID`) REFERENCES Customers(CustomerID) ON DELETE CASCADE ON UPDATE CASCADE,
