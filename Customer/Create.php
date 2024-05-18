@@ -1,4 +1,7 @@
 <?php
+
+    header('Content-Type: application/json');
+
     $host = "localhost";
     $username = "root";
     $password = "";
@@ -8,7 +11,6 @@
     if($db->connect_error)  die("Connection Failed ". $db->connect_error);
     else    /*echo "Connection Successful"*/;
 
-    session_start();
     $db->begin_transaction();
 
     $table = "customers";
@@ -26,15 +28,13 @@
         if($db->query($sql) === FALSE){
             throw new Exception();
         }
-
+        
         $db->commit();
-        $_SESSION['status'] = TRUE;
+        echo json_encode(["success" => TRUE]);
     }
     catch(Exception $e){
         $db->rollback();
-        $_SESSION['status'] = FALSE;
+        echo json_encode(["success" => FALSE]);
     }
-    
     $db->close();
-    header("Location: Customer_mainpage.php");
 ?>

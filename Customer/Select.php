@@ -8,10 +8,29 @@
 	if($db->connect_error)	die("Connection Failed ". $db->connect_error);
 	else	/*echo "Connection Successful"*/;
 
-	$table = "customers";
-	$sql = "SELECT * FROM $table";
-	$result = $db->query($sql);
-    $db->close();
+    $table = "customers";
+    $limit = $_GET['limit'];
+    $offset = $_GET['offset'];
+    $search = $_GET['search'];
+    $sort = $_GET['sort'];
+    $order = $_GET['order'];
+    
+    $sql = "SELECT * FROM $table";
+    $sql_t = "SELECT COUNT(*) as total FROM $table";
+    
+    if (!empty($search)) {
+        $sql .= " WHERE CustomerID LIKE '%".$search."%' OR Name LIKE '%".$search."%'";
+        $sql_t .= " WHERE CustomerID LIKE '%".$search."%' OR Name LIKE '%".$search."%'";
+    }
+    $sql .= " ORDER BY " . $sort. " " . $order ." ";
+    $sql .= " LIMIT $limit OFFSET $offset";
+    
+    $result_t = $db->query($sql_t);
+    $result = $db->query($sql);
+	$db->close();
+    
+    $row = $result_t->fetch_assoc();
+    $total = $row['total'];
 
     while($row = $result->fetch_assoc()){
         $data[] = array(
@@ -24,5 +43,6 @@
             "CustomerType" => $row['CustomerType']
        );
     }
-    echo json_encode($data);
+    echo json_encode(["total" => $total, "rows" => $data]);
+    
 ?>
