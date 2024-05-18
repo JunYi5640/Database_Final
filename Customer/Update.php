@@ -33,11 +33,12 @@
         }
             
         $db->commit();
-        echo json_encode(["success" => TRUE]);
+        echo json_encode(["success" => TRUE, "message" => "Success"]);
+        
     }
     catch(Exception $e){
         $db->rollback();
-        echo json_encode(["success" => FALSE]);
+        echo json_encode(["success" => FALSE, "message" => "Failed"]);
     }
     $db->close();
 ?>
