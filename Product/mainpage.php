@@ -104,8 +104,8 @@
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="ProductID" class="form-label">Product ID: </label>
-							<span id="ProductID"></span>
+							<label for="ProductID" class="form-label">Product ID : </label>
+							<b><span id="ProductID"></span></b>
                         </div>
                         <div class="mb-3">
                             <label for="Name" class="form-label">Name: </label>

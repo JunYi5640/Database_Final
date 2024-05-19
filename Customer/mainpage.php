@@ -110,8 +110,8 @@
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="CustomerID" class="form-label">Customer ID: </label>
-							<span id="CustomerID"></span>
+							<label for="CustomerID" class="form-label">Customer ID : </label>
+							<b><span id="CustomerID"></span></b>
                         </div>
                         <div class="mb-3">
                             <label for="Name" class="form-label">Name: </label>
