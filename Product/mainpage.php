@@ -1,3 +1,5 @@
+<!-- TODO : Description modal -->
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -47,7 +49,7 @@
 			<th data-field="CategoryID" data-sortable="true">Category ID</th>
 			<th data-field="Price">Price</th>
 			<th data-field="StockQuantity">Stock Quantity</th>
-			<th data-field="Description">Description</th>
+			<th data-field="Description" data-formatter="descriptionFormatter" data-events="actionEvents">Description</th>
 			<th data-field="action" data-formatter="actionFormatter" data-events="actionEvents" algin = "center">Action</th>
 			</tr>
 		</thead>
@@ -102,7 +104,7 @@
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="ProductID" class="form-label"> Product ID : </label>
+							<label for="ProductID" class="form-label">Product ID: </label>
 							<span id="ProductID"></span>
                         </div>
                         <div class="mb-3">
@@ -131,17 +133,48 @@
             </div>
         </div>
     </div>
-	
+
+	<!-- Description Product form -->
+	<div class="modal fade" id="DesciptionModal" tabindex="-1" aria-labelledby="DesciptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DesciptionModalLabel">Description of Product ID: <span id="ProductIDLabel"></span></h5> 
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+					<div class="mb-3">
+                        <label for="DesciptionLabel" class="form-label"></label>
+						<span id="DesciptionLabel"></span>
+                    </div>
+					<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<script>
+
+		function descriptionFormatter(value, row, index){
+			if(!value) return '';
+				var maxLength = 10;
+			if(value.length > maxLength){
+				return value.substring(0, maxLength) + 
+					'...<button class="btn btn-secondary btn-sm readmore-button">Read more</button>';
+			}
+			return value
+			
+		}
+
 		// action button in table column
-		function actionFormatter(value, row, index) {
-			return [
+		function actionFormatter(value, row, index){
+			return[
 				'<div style = "display: flex; align-items: center; justify-content: center;">',
-					'<button class="btn btn-primary update-button" data-id="' + row.ProductID + '" style="margin-right: 5px;">',
+					'<button class="btn btn-primary update-button" style="margin-right: 5px;">',
 					'<i class="bi bi-gear"></i>', 
 					'</button>',
 
-					'<button class="btn btn-danger  delete-button" data-id="' + row.ProductID + '">',
+					'<button class="btn btn-danger  delete-button" >',
 					'<i class="bi bi-trash"></i>', 
 					'</button>',
 				'</div>'
@@ -153,7 +186,7 @@
 			// Update button
         	'click .update-button': function(e, value, row, index){
 				e.stopPropagation();
-				$('#UpdateModal').on('shown.bs.modal', function (e) {
+				$('#UpdateModal').on('shown.bs.modal', function(e){
 					$('#UpdateForm #ProductID').text(row.ProductID);
 					$('#UpdateForm input[name="Name"]').val(row.Name);
 					$('#UpdateForm input[name="CategoryID"]').val(row.CategoryID);
@@ -190,6 +223,15 @@
                         alert('An error occurred while deleting product');
                     }
             	});
+        	},
+
+			'click .readmore-button': function(e, value, row, index){
+				e.stopPropagation();
+				$('#DesciptionModal').on('shown.bs.modal', function(e){
+					$('#ProductIDLabel').text(row.ProductID)
+					$('#DesciptionLabel').text(value);
+				});
+				$('#DesciptionModal').modal('show');
         	}
     	};
 
@@ -206,8 +248,8 @@
 
 		// Get all selected row's ProductID
 		var $table = $('#table')
-		function getSelections() {
-    		return $.map($table.bootstrapTable('getSelections'), function (row) {
+		function getSelections(){
+    		return $.map($table.bootstrapTable('getSelections'), function(row){
       			return row.ProductID
     		})
   		}

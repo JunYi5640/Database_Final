@@ -110,7 +110,7 @@
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="CustomerID" class="form-label"> Customer ID : </label>
+							<label for="CustomerID" class="form-label">Customer ID: </label>
 							<span id="CustomerID"></span>
                         </div>
                         <div class="mb-3">
@@ -149,14 +149,14 @@
 	
 	<script>
 		// action button in table column
-		function actionFormatter(value, row, index) {
+		function actionFormatter(value, row, index){
 			return [
 				'<div style = "display: flex; align-items: center; justify-content: center;">',
-					'<button class="btn btn-primary update-button" data-id="' + row.CustomerID + '" style="margin-right: 5px;">',
+					'<button class="btn btn-primary update-button" style="margin-right: 5px;">',
 					'<i class="bi bi-gear"></i>', 
 					'</button>',
 
-					'<button class="btn btn-danger  delete-button" data-id="' + row.CustomerID + '">',
+					'<button class="btn btn-danger delete-button">',
 					'<i class="bi bi-trash"></i>', 
 					'</button>',
 				'</div>'
@@ -223,7 +223,7 @@
 		// Get all selected row's CustomerID
 		var $table = $('#table')
 		function getSelections() {
-    		return $.map($table.bootstrapTable('getSelections'), function (row) {
+    		return $.map($table.bootstrapTable('getSelections'), function(row){
       			return row.CustomerID
     		})
   		}
