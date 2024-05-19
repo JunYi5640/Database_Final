@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>Customer Management</title>
+		<title>Product Management</title>
 		<!--- including --->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -21,15 +21,15 @@
 	</head>
 
 	<body>
-	<!-- Customer Table -->
+	<!-- Product Table -->
 	<div class = "container mb-4 mt-4" style = "max-width:1400px">
-		<h2><b>Customer Table</b></h2>
+		<h2><b>Product Table</b></h2>
 		<table
 			id="table"
 			data-toggle="table"
 			data-url="Select.php"
 			data-buttons="buttons"
-			data-sort-name="CustomerID" 
+			data-sort-name="ProductID" 
       		data-sort-order="asc" 
 			data-pagination="true"
 			data-side-pagination="server"
@@ -42,25 +42,24 @@
 		<thead>
 			<tr>
 			<th data-field="state" data-checkbox="true"></th>
-			<th data-field="CustomerID" data-sortable="true">ID</th>
-			<th data-field="Name">Name</th>
-			<th data-field="Email">Email</th>
-			<th data-field="PhoneNumber">Phone Number</th>
-			<th data-field="Address">Address</th>
-			<th data-field="RegistrationDate">Registration Date</th>
-			<th data-field="CustomerType">Customer Type</th>
+			<th data-field="ProductID" data-sortable="true">ID</th>
+			<th data-field="Name" data-sortable="true">Name</th>
+			<th data-field="CategoryID" data-sortable="true">Category ID</th>
+			<th data-field="Price">Price</th>
+			<th data-field="StockQuantity">Stock Quantity</th>
+			<th data-field="Description">Description</th>
 			<th data-field="action" data-formatter="actionFormatter" data-events="actionEvents" algin = "center">Action</th>
 			</tr>
 		</thead>
 		</table>
 	</div>
 
-	<!-- Create Customer Modal -->
+	<!-- Create Product Modal -->
 	<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="CreateModalLabel">Create New Customer</h5>
+                    <h5 class="modal-title" id="CreateModalLabel">Create New Product</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -70,27 +69,20 @@
                             <input type="text" class="form-control" name="Name" id="Name" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Email" class="form-label">Email: </label>
-                            <input type="text" class="form-control" name="Email" id="Email" required>
+                            <label for="CategoryID" class="form-label">CategoryID: </label>
+                            <input type="text" class="form-control" name="CategoryID" id="CategoryID" required>
                         </div>
 						<div class="mb-3">
-                            <label for="PhoneNumber" class="form-label">Phone Number: </label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
+                            <label for="Price" class="form-label">Price: </label>
+                            <input type="text" class="form-control" name="Price" id="Price" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Address" class="form-label">Address: </label>
-                            <input type="text" class="form-control" name="Address" id="Address" required>
+                            <label for="StockQuantity" class="form-label">Stock Quantity: </label>
+                            <input type="text" class="form-control" name="StockQuantity" id="StockQuantity" required>
                         </div>
 						<div class="mb-3">
-                            <label for="RegistrationDate" class="form-label">Registration Date: </label>
-                            <input type="date" class="form-control" name="RegistrationDate" id="RegistrationDate" required>
-                        </div>
-						<div class="mb-3">
-                            <label for="CustomerType" class="form-label">Customer Type: </label>
-                            <input type="radio" name="CustomerType" id="CustomerType" value="Individual" checked/>
-							<label for="Individual">Individual</label>
-							<input type="radio" name="CustomerType" id="CustomerType" value="Corporate"/>
-    						<label for="Corporate">Corporate</label><br>
+                            <label for="Description" class="form-label">Description: </label>
+                            <input type="text" class="form-control" name="Description" id="Description" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -99,46 +91,39 @@
         </div>
     </div>
 
-	<!-- Update Customer form -->
+	<!-- Update Product form -->
 	<div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="UpdateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="UpdateModalLabel">Customer Profile</h5>
+                    <h5 class="modal-title" id="UpdateModalLabel">Product Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="CustomerID" class="form-label"> Customer ID : </label>
-							<span id="CustomerID"></span>
+							<label for="ProductID" class="form-label"> Product ID : </label>
+							<span id="ProductID"></span>
                         </div>
                         <div class="mb-3">
                             <label for="Name" class="form-label">Name: </label>
                             <input type="text" class="form-control" name="Name" id="Name" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Email" class="form-label">Email: </label>
-                            <input type="text" class="form-control" name="Email" id="Email" required>
+                            <label for="CategoryID" class="form-label">CategoryID: </label>
+                            <input type="text" class="form-control" name="CategoryID" id="CategoryID" required>
                         </div>
 						<div class="mb-3">
-                            <label for="PhoneNumber" class="form-label">Phone Number: </label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
+                            <label for="Price" class="form-label">Price: </label>
+                            <input type="text" class="form-control" name="Price" id="Price" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Address" class="form-label">Address: </label>
-                            <input type="text" class="form-control" name="Address" id="Address" required>
+                            <label for="StockQuantity" class="form-label">Stock Quantity: </label>
+                            <input type="text" class="form-control" name="StockQuantity" id="StockQuantity" required>
                         </div>
 						<div class="mb-3">
-                            <label for="RegistrationDate" class="form-label">Registration Date: </label>
-                            <input type="date" class="form-control" name="RegistrationDate" id="RegistrationDate" required>
-                        </div>
-						<div class="mb-3">
-                            <label for="CustomerType" class="form-label">Customer Type: </label>
-                            <input type="radio" name="CustomerType" id="CustomerType" value="Individual" checked/>
-							<label for="Individual">Individual</label>
-							<input type="radio" name="CustomerType" id="CustomerType" value="Corporate"/>
-    						<label for="Corporate">Corporate</label><br>
+                            <label for="Description" class="form-label">Description: </label>
+                            <input type="text" class="form-control" name="Description" id="Description" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -152,11 +137,11 @@
 		function actionFormatter(value, row, index) {
 			return [
 				'<div style = "display: flex; align-items: center; justify-content: center;">',
-					'<button class="btn btn-primary update-button" data-id="' + row.CustomerID + '" style="margin-right: 5px;">',
+					'<button class="btn btn-primary update-button" data-id="' + row.ProductID + '" style="margin-right: 5px;">',
 					'<i class="bi bi-gear"></i>', 
 					'</button>',
 
-					'<button class="btn btn-danger  delete-button" data-id="' + row.CustomerID + '">',
+					'<button class="btn btn-danger  delete-button" data-id="' + row.ProductID + '">',
 					'<i class="bi bi-trash"></i>', 
 					'</button>',
 				'</div>'
@@ -169,13 +154,12 @@
         	'click .update-button': function(e, value, row, index){
 				e.stopPropagation();
 				$('#UpdateModal').on('shown.bs.modal', function (e) {
-					$('#UpdateForm #CustomerID').text(row.CustomerID);
+					$('#UpdateForm #ProductID').text(row.ProductID);
 					$('#UpdateForm input[name="Name"]').val(row.Name);
-					$('#UpdateForm input[name="Email"]').val(row.Email);
-					$('#UpdateForm input[name="PhoneNumber"]').val(row.PhoneNumber);
-					$('#UpdateForm input[name="Address"]').val(row.Address);
-					$('#UpdateForm input[name="RegistrationDate"]').val(row.RegistrationDate);
-					$('#UpdateForm input[name="CustomerType"][value="' + row.CustomerType + '"]').prop('checked', true);
+					$('#UpdateForm input[name="CategoryID"]').val(row.CategoryID);
+					$('#UpdateForm input[name="Price"]').val(row.Price);
+					$('#UpdateForm input[name="StockQuantity"]').val(row.StockQuantity);
+					$('#UpdateForm input[name="Description"]').val(row.Description);
 				});
 				$('#UpdateModal').modal('show');
         	},
@@ -187,23 +171,23 @@
                     url: 'Delete.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {ids: [row.CustomerID]},
+                    data: {ids: [row.ProductID]},
                     success: function(response){
 						if(response.success){
 							$table.bootstrapTable('remove', {
-                            field: 'CustomerID',
-                            values: row.CustomerID
+                            field: 'ProductID',
+                            values: row.ProductID
                         	});
 							$table.bootstrapTable('refresh')
-							alert('Customer deleted successfully');
+							alert('Product deleted successfully');
 						}
 						else{
-							alert('Customer deleted Failed');
+							alert('Product deleted Failed');
 						}
                                 
                     },
                 	error: function(){
-                        alert('An error occurred while deleting customer');
+                        alert('An error occurred while deleting product');
                     }
             	});
         	}
@@ -220,11 +204,11 @@
 			};
 		}
 
-		// Get all selected row's CustomerID
+		// Get all selected row's ProductID
 		var $table = $('#table')
 		function getSelections() {
     		return $.map($table.bootstrapTable('getSelections'), function (row) {
-      			return row.CustomerID
+      			return row.ProductID
     		})
   		}
 		
@@ -234,22 +218,22 @@
 
 			// Create button
 			btnCreate:{
-				text: 'Create customer',
-				icon: 'bi bi-person-fill-add',
+				text: 'Create product',
+				icon: 'bi bi-cart-plus-fill',
 				event: function(){
 					// Create button event
 					$('#CreateModal').modal('show');
 				},
 				attributes:{
-					title: 'Create new customer',
+					title: 'Create new product',
 					class: 'btn btn-primary btn-lg',
 				}
 			},
 
 			// Delete Button
 			btnDelete:{
-				text: 'Delete customer',
-				icon: 'bi bi-person-fill-dash',
+				text: 'Delete product',
+				icon: 'bi bi-cart-dash-fill',
 				event: function(){
 					// Delete button event
 					var ids = getSelections();
@@ -263,25 +247,25 @@
                             success: function(response){
 								if(response.success){
 									$table.bootstrapTable('remove', {
-                                    field: 'CustomerID',
+                                    field: 'ProductID',
                                     values: ids
                                 	});
 									$table.bootstrapTable('refresh')
-                                	alert('Customer deleted successfully');
+                                	alert('Product deleted successfully');
 								}
 								else{
-									alert('Customer deleted Failed');
+									alert('Product deleted Failed');
 								}
                                 
                             },
                             error: function(){
-                                alert('An error occurred while deleting customer');
+                                alert('An error occurred while deleting product');
                             }
                         });
 					}
 				},
 				attributes:{
-				title: 'Delete selected customer',
+				title: 'Delete selected product',
 				class: 'btn btn-primary btn-lg'
 				}
 			}
@@ -293,33 +277,31 @@
 			// Create button
             $('#CreateForm').submit(function(event){
                 var Name = $('#CreateForm #Name').val();
-				var Email = $('#CreateForm #Email').val();
-				var PhoneNumber = $('#CreateForm #PhoneNumber').val();
-				var Address = $('#CreateForm #Address').val();
-				var RegistrationDate = $('#CreateForm #RegistrationDate').val();
-				var CustomerType = $('#CreateForm #CustomerType:checked').val();
+				var CategoryID = $('#CreateForm #CategoryID').val();
+				var Price = $('#CreateForm #Price').val();
+				var StockQuantity = $('#CreateForm #StockQuantity').val();
+				var Description = $('#CreateForm #Description').val();
 
 				$.ajax({
                     url: 'Create.php',
                     method: 'POST',
 					dataType: 'json',
                     data: {Name: Name,
-						   Email: Email,
-						   PhoneNumber: PhoneNumber,
-						   Address: Address,
-						   RegistrationDate: RegistrationDate,
-						   CustomerType: CustomerType
+						   CategoryID: CategoryID,
+						   Price: Price,
+						   StockQuantity: StockQuantity,
+						   Description: Description,
 					},
                     success: function(response){
 						if(response.success){
-							alert("Customer created successfully");
+							alert("Product created successfully");
 						}
 						else{
-							alert("Customer created failed");
+							alert("Product created failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while creating customer');
+                        alert('An error occurred while creating product');
                     }
                 });
                 $('#CreateModal').modal('hide');
@@ -327,44 +309,40 @@
 
 			// Update button
 			$('#UpdateForm').submit(function(event){
-				var CustomerID = $('#UpdateForm #CustomerID').text();
+				var ProductID = $('#UpdateForm #ProductID').text();
                 var Name = $('#UpdateForm #Name').val();
-				var Email = $('#UpdateForm #Email').val();
-				var PhoneNumber = $('#UpdateForm #PhoneNumber').val();
-				var Address = $('#UpdateForm #Address').val();
-				var RegistrationDate = $('#UpdateForm #RegistrationDate').val();
-				var CustomerType = $('#UpdateForm #CustomerType:checked').val();
+				var CategoryID = $('#UpdateForm #CategoryID').val();
+				var Price = $('#UpdateForm #Price').val();
+				var StockQuantity = $('#UpdateForm #StockQuantity').val();
+				var Description = $('#UpdateForm #Description').val();
 
 				$.ajax({
                     url: 'Update.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {CustomerID: CustomerID,
+                    data: {ProductID: ProductID,
 						   Name: Name,
-						   Email: Email,
-						   PhoneNumber: PhoneNumber,
-						   Address: Address,
-						   RegistrationDate: RegistrationDate,
-						   CustomerType: CustomerType
+						   CategoryID: CategoryID,
+						   Price: Price,
+						   StockQuantity: StockQuantity,
+						   Description: Description,
 					},
                     success: function(response){
 						console.log(response.success);
 						if(response.success){
-							alert("Customer updated successfully");
+							alert("Product updated successfully");
 						}
 						else{
-							alert("Customer updated failed");
+							alert("Product updated failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while updating customer');
+                        alert('An error occurred while updating product');
                     }
                 }); 
                 $('#UpdateModal').modal('hide');
             });
         });
 	</script>	
-		
-		
 	</body>
 </html>

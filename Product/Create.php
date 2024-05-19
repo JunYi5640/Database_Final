@@ -13,28 +13,23 @@
 
     $db->begin_transaction();
 
-    $table = "customers";
+    $table = "products";
 
     try{
-        $CustomerID = $_REQUEST['CustomerID'];
         $Name = $_REQUEST['Name'];
-        $Email = $_REQUEST['Email'];
-        $PhoneNumber = $_REQUEST['PhoneNumber'];
-        $Address = $_REQUEST['Address'];
-        $RegistrationDate = $_REQUEST['RegistrationDate'];
-        $CustomerType = $_REQUEST['CustomerType'];
-        
-        $sql = "UPDATE $table SET Name = '$Name', Email = '$Email', PhoneNumber = '$PhoneNumber',
-                Address = '$Address',  RegistrationDate = '$RegistrationDate', CustomerType = '$CustomerType'
-                WHERE CustomerID = $CustomerID";
-             
+        $CategoryID = $_REQUEST['CategoryID'];
+        $Price = $_REQUEST['Price'];
+        $StockQuantity = $_REQUEST['StockQuantity'];
+        $Description = $_REQUEST['Description'];
+
+        $sql = "INSERT INTO $table(Name, CategoryID, Price, StockQuantity, Description)
+                VALUES('$Name', '$CategoryID', '$Price', '$StockQuantity', '$Description')";
         if($db->query($sql) === FALSE){
             throw new Exception();
         }
-            
+        
         $db->commit();
         echo json_encode(["success" => TRUE]);
-        
     }
     catch(Exception $e){
         $db->rollback();

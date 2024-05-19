@@ -13,20 +13,19 @@
 
     $db->begin_transaction();
 
-    $table = "customers";
+    $table = "products";
 
     try{
-        $CustomerID = $_REQUEST['CustomerID'];
+        $ProductID = $_REQUEST['ProductID'];
         $Name = $_REQUEST['Name'];
-        $Email = $_REQUEST['Email'];
-        $PhoneNumber = $_REQUEST['PhoneNumber'];
-        $Address = $_REQUEST['Address'];
-        $RegistrationDate = $_REQUEST['RegistrationDate'];
-        $CustomerType = $_REQUEST['CustomerType'];
+        $CategoryID = $_REQUEST['CategoryID'];
+        $Price = $_REQUEST['Price'];
+        $StockQuantity = $_REQUEST['StockQuantity'];
+        $Description = $_REQUEST['Description'];
         
-        $sql = "UPDATE $table SET Name = '$Name', Email = '$Email', PhoneNumber = '$PhoneNumber',
-                Address = '$Address',  RegistrationDate = '$RegistrationDate', CustomerType = '$CustomerType'
-                WHERE CustomerID = $CustomerID";
+        $sql = "UPDATE $table SET Name = '$Name', CategoryID = '$CategoryID', Price = '$Price',
+                StockQuantity = '$StockQuantity',  Description = '$Description'
+                WHERE ProductID = $ProductID";
              
         if($db->query($sql) === FALSE){
             throw new Exception();
