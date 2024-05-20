@@ -37,6 +37,7 @@
 			data-search="true"
   			data-show-search-button="true"
 			data-click-to-select="true"
+			data-on-click-cell="onClickCell"
 			data-query-params="queryParams"
 			>
 		<thead>
@@ -110,7 +111,7 @@
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="CustomerID" class="form-label">Customer ID : </label>
+							<label for="CustomerID" class="form-label">CustomerID: </label>
 							<b><span id="CustomerID"></span></b>
                         </div>
                         <div class="mb-3">
@@ -167,8 +168,7 @@
 		window.actionEvents = {
 			// Update button
         	'click .update-button': function(e, value, row, index){
-				e.stopPropagation();
-				$('#UpdateModal').on('shown.bs.modal', function (e) {
+				$('#UpdateModal').on('show.bs.modal', function (e) {
 					$('#UpdateForm #CustomerID').text(row.CustomerID);
 					$('#UpdateForm input[name="Name"]').val(row.Name);
 					$('#UpdateForm input[name="Email"]').val(row.Email);
@@ -182,7 +182,6 @@
 
 			// Delete button
 			'click .delete-button': function(e, value, row, index){
-				e.stopPropagation();
 				$.ajax({
                     url: 'Delete.php',
                     method: 'POST',

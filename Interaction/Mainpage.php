@@ -1,10 +1,12 @@
+<!-- TODO: CustomerID can be search and select in create and update form -->
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>Product Management</title>
+		<title>Customer Interaction Management</title>
 		<!--- including --->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -18,23 +20,23 @@
 				width: 400px;
 			}
 			#DescriptionLabel{
-				word-wrap: break-word;
-				white-space: pre-wrap;
-				overflow-wrap: break-word;
+            word-wrap: break-word; /* Ensure long words break and wrap to the next line */
+            white-space: pre-wrap; /* Preserve whitespace and ensure text wraps correctly */
+            overflow-wrap: break-word; /* A newer property similar to word-wrap, recommended for future-proofing */
         	}
     	</style>
 	</head>
 
 	<body>
-	<!-- Product Table -->
+	<!-- Customer Interaction Table -->
 	<div class = "container mb-4 mt-4" style = "max-width:1400px">
-		<h2><b>Product Table</b></h2>
+		<h2><b>Customer Interaction Log</b></h2>
 		<table
 			id="table"
 			data-toggle="table"
 			data-url="Select.php"
 			data-buttons="buttons"
-			data-sort-name="ProductID" 
+			data-sort-name="InteractionID" 
       		data-sort-order="asc" 
 			data-pagination="true"
 			data-side-pagination="server"
@@ -48,11 +50,10 @@
 		<thead>
 			<tr>
 			<th data-field="state" data-checkbox="true"></th>
-			<th data-field="ProductID" data-sortable="true">ID</th>
-			<th data-field="Name" data-sortable="true">Name</th>
-			<th data-field="CategoryID" data-sortable="true">CategoryID</th>
-			<th data-field="Price">Price</th>
-			<th data-field="StockQuantity">Stock Quantity</th>
+			<th data-field="InteractionID" data-sortable="true">ID</th>
+			<th data-field="CustomerID" data-sortable="true">CustomerID</th>
+			<th data-field="Date" data-sortable="true">Date</th>
+			<th data-field="Mode">Mode</th>
 			<th data-field="Description" data-formatter="descriptionFormatter" data-events="actionEvents">Description</th>
 			<th data-field="action" data-formatter="actionFormatter" data-events="actionEvents" algin = "center">Action</th>
 			</tr>
@@ -60,31 +61,32 @@
 		</table>
 	</div>
 
-	<!-- Create Product Modal -->
+	<!-- Create Customer Interaction Modal -->
 	<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="CreateModalLabel">Create New Product</h5>
+                    <h5 class="modal-title" id="CreateModalLabel">Create New Customer Interaction</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 					<form id="CreateForm">
                         <div class="mb-3">
-                            <label for="Name" class="form-label">Name: </label>
-                            <input type="text" class="form-control" name="Name" id="Name" required>
+                            <label for="CustomerID" class="form-label">CustomerID: </label>
+                            <input type="text" class="form-control" name="CustomerID" id="CustomerID" required>
                         </div>
 						<div class="mb-3">
-                            <label for="CategoryID" class="form-label">CategoryID: </label>
-                            <input type="number" class="form-control" name="CategoryID" id="CategoryID" required>
+                            <label for="Date" class="form-label">Date: </label>
+                            <input type="date" class="form-control" name="Date" id="Date" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Price" class="form-label">Price: </label>
-                            <input type="number" class="form-control" name="Price" id="Price" required>
-                        </div>
-						<div class="mb-3">
-                            <label for="StockQuantity" class="form-label">Stock Quantity: </label>
-                            <input type="number" class="form-control" name="StockQuantity" id="StockQuantity" required>
+                            <label for="Mode" class="form-label">Mode: </label>
+                            <input type="radio" name="Mode" id="Mode" value="Email" checked/>
+							<label for="Email">Email</label>
+							<input type="radio" name="Mode" id="Mode" value="Phone"/>
+    						<label for="Phone">Phone</label>
+							<input type="radio" name="Mode" id="Mode" value="In-Person"/>
+							<label for="In-Person">In-Person</label><br>
                         </div>
 						<div class="mb-3">
                             <label for="Description" class="form-label">Description: </label>
@@ -97,35 +99,36 @@
         </div>
     </div>
 
-	<!-- Update Product form -->
+	<!-- Update Interaction form -->
 	<div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="UpdateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="UpdateModalLabel">Product Profile</h5>
+                    <h5 class="modal-title" id="UpdateModalLabel">Interaction</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="ProductID" class="form-label">ProductID: </label>
-							<b><span id="ProductID"></span></b>
-                        </div>
-                        <div class="mb-3">
-                            <label for="Name" class="form-label">Name: </label>
-                            <input type="text" class="form-control" name="Name" id="Name" required>
+							<label for="InteractionID" class="form-label">InteractionID: </label>
+							<b><span id="InteractionID"></span></b>
                         </div>
 						<div class="mb-3">
-                            <label for="CategoryID" class="form-label">CategoryID: </label>
-                            <input type="number" class="form-control" name="CategoryID" id="CategoryID" required>
+                            <label for="CustomerID" class="form-label">CustomerID: </label>
+                            <input type="text" class="form-control" name="CustomerID" id="CustomerID" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Price" class="form-label">Price: </label>
-                            <input type="number" class="form-control" name="Price" id="Price" required>
+                            <label for="Date" class="form-label">Date: </label>
+                            <input type="date" class="form-control" name="Date" id="Date" required>
                         </div>
 						<div class="mb-3">
-                            <label for="StockQuantity" class="form-label">Stock Quantity: </label>
-                            <input type="number" class="form-control" name="StockQuantity" id="StockQuantity" required>
+                            <label for="Mode" class="form-label">Mode: </label>
+                            <input type="radio" name="Mode" id="Mode" value="Email"/>
+							<label for="Email">Email</label>
+							<input type="radio" name="Mode" id="Mode" value="Phone"/>
+    						<label for="Phone">Phone</label>
+							<input type="radio" name="Mode" id="Mode" value="In-Person"/>
+							<label for="In-Person">In-Person</label><br>
                         </div>
 						<div class="mb-3">
                             <label for="Description" class="form-label">Description: </label>
@@ -138,17 +141,17 @@
         </div>
     </div>
 
-	<!-- Description Product -->
+	<!-- Description Interaction -->
 	<div class="modal fade" id="DescriptionModal" tabindex="-1" aria-labelledby="DescriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="DescriptionModalLabel">Description of ProductID: <span id="ProductIDLabel"></span></h5> 
+                    <h5 class="modal-title" id="DescriptionModalLabel">Description of InteractionID: <span id="InteractionIDLabel"></span></h5> 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 					<div class="mb-3">
-						<span id="DescriptionLabel"></span>
+                        <span id="DescriptionLabel"></span>
                     </div>
 					<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -189,11 +192,10 @@
 			// Update button
         	'click .update-button': function(e, value, row, index){
 				$('#UpdateModal').on('show.bs.modal', function(e){
-					$('#UpdateForm #ProductID').text(row.ProductID);
-					$('#UpdateForm input[name="Name"]').val(row.Name);
-					$('#UpdateForm input[name="CategoryID"]').val(row.CategoryID);
-					$('#UpdateForm input[name="Price"]').val(row.Price);
-					$('#UpdateForm input[name="StockQuantity"]').val(row.StockQuantity);
+					$('#UpdateForm #InteractionID').text(row.InteractionID);
+					$('#UpdateForm input[name="CustomerID"]').val(row.CustomerID);
+					$('#UpdateForm input[name="Date"]').val(row.Date);
+					$('#UpdateForm input[name="Mode"][value="' + row.Mode + '"]').prop('checked', true);
 					$('#UpdateForm textarea[name="Description"]').val(row.Description);
 				});
 				$('#UpdateModal').modal('show');
@@ -205,30 +207,30 @@
                     url: 'Delete.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {ids: [row.ProductID]},
+                    data: {ids: [row.InteractionID]},
                     success: function(response){
 						if(response.success){
 							$table.bootstrapTable('remove', {
-                            field: 'ProductID',
-                            values: row.ProductID
+                            field: 'InteractionID',
+                            values: row.InteractionID
                         	});
 							$table.bootstrapTable('refresh')
-							alert('Product deleted successfully');
+							alert('Interaction deleted successfully');
 						}
 						else{
-							alert('Product deleted Failed');
+							alert('Interaction deleted Failed');
 						}
                                 
                     },
                 	error: function(){
-                        alert('An error occurred while deleting product');
+                        alert('An error occurred while deleting interaction');
                     }
             	});
         	},
 
 			'click .readmore-button': function(e, value, row, index){
 				$('#DescriptionModal').on('show.bs.modal', function(e){
-					$('#ProductIDLabel').text(row.ProductID)
+					$('#InteractionIDLabel').text(row.InteractionID)
 					$('#DescriptionLabel').text(value);
 				});
 				$('#DescriptionModal').modal('show');
@@ -246,11 +248,11 @@
 			};
 		}
 
-		// Get all selected row's ProductID
+		// Get all selected row's InteractionID
 		var $table = $('#table')
 		function getSelections(){
     		return $.map($table.bootstrapTable('getSelections'), function(row){
-      			return row.ProductID
+      			return row.InteractionID
     		})
   		}
 		
@@ -260,21 +262,21 @@
 
 			// Create button
 			btnCreate:{
-				text: 'Create product',
+				text: 'Create interaction',
 				icon: 'bi bi-cart-plus-fill',
 				event: function(){
 					// Create button event
 					$('#CreateModal').modal('show');
 				},
 				attributes:{
-					title: 'Create new product',
+					title: 'Create new interaction',
 					class: 'btn btn-primary btn-lg',
 				}
 			},
 
 			// Delete Button
 			btnDelete:{
-				text: 'Delete product',
+				text: 'Delete interaction',
 				icon: 'bi bi-cart-dash-fill',
 				event: function(){
 					// Delete button event
@@ -289,25 +291,25 @@
                             success: function(response){
 								if(response.success){
 									$table.bootstrapTable('remove', {
-                                    field: 'ProductID',
+                                    field: 'InteractionID',
                                     values: ids
                                 	});
 									$table.bootstrapTable('refresh')
-                                	alert('Product deleted successfully');
+                                	alert('Interaction deleted successfully');
 								}
 								else{
-									alert('Product deleted Failed');
+									alert('Interaction deleted Failed');
 								}
                                 
                             },
                             error: function(){
-                                alert('An error occurred while deleting product');
+                                alert('An error occurred while deleting interaction');
                             }
                         });
 					}
 				},
 				attributes:{
-				title: 'Delete selected product',
+				title: 'Delete selected interaction',
 				class: 'btn btn-primary btn-lg'
 				}
 			}
@@ -318,32 +320,30 @@
 		$(document).ready(function(){
 			// Create button
             $('#CreateForm').submit(function(event){
-                var Name = $('#CreateForm #Name').val();
-				var CategoryID = $('#CreateForm #CategoryID').val();
-				var Price = $('#CreateForm #Price').val();
-				var StockQuantity = $('#CreateForm #StockQuantity').val();
+                var CustomerID = $('#CreateForm #CustomerID').val();
+				var Date = $('#CreateForm #Date').val();
+				var Mode = $('#CreateForm #Mode').val();
 				var Description = $('#CreateForm #Description').val();
 
 				$.ajax({
                     url: 'Create.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {Name: Name,
-						   CategoryID: CategoryID,
-						   Price: Price,
-						   StockQuantity: StockQuantity,
-						   Description: Description,
+                    data: {CustomerID: CustomerID,
+						   Date: Date,
+						   Mode: Mode,
+						   Description: Description
 					},
                     success: function(response){
 						if(response.success){
-							alert("Product created successfully");
+							alert("Interaction created successfully");
 						}
 						else{
-							alert("Product created failed");
+							alert("Interaction created failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while creating product');
+                        alert('An error occurred while creating interaction');
                     }
                 });
                 $('#CreateModal').modal('hide');
@@ -351,35 +351,31 @@
 
 			// Update button
 			$('#UpdateForm').submit(function(event){
-				var ProductID = $('#UpdateForm #ProductID').text();
-                var Name = $('#UpdateForm #Name').val();
-				var CategoryID = $('#UpdateForm #CategoryID').val();
-				var Price = $('#UpdateForm #Price').val();
-				var StockQuantity = $('#UpdateForm #StockQuantity').val();
+				var InteractionID = $('#UpdateForm #InteractionID').text();
+                var CustomerID = $('#UpdateForm #CustomerID').val();
+				var Date = $('#UpdateForm #Date').val();
+				var Mode = $('#UpdateForm #Mode').val();
 				var Description = $('#UpdateForm #Description').val();
-
 				$.ajax({
                     url: 'Update.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {ProductID: ProductID,
-						   Name: Name,
-						   CategoryID: CategoryID,
-						   Price: Price,
-						   StockQuantity: StockQuantity,
-						   Description: Description,
+                    data: {InteractionID: InteractionID,
+						   CustomerID: CustomerID,
+						   Date: Date,
+						   Mode: Mode,
+						   Description: Description
 					},
                     success: function(response){
-						console.log(response.success);
 						if(response.success){
-							alert("Product updated successfully");
+							alert("Interaction updated successfully");
 						}
 						else{
-							alert("Product updated failed");
+							alert("Interaction updated failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while updating product');
+                        alert('An error occurred while updating interaction');
                     }
                 }); 
                 $('#UpdateModal').modal('hide');
