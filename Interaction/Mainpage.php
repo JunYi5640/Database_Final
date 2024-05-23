@@ -20,9 +20,9 @@
 				width: 400px;
 			}
 			#DescriptionLabel{
-            word-wrap: break-word; /* Ensure long words break and wrap to the next line */
-            white-space: pre-wrap; /* Preserve whitespace and ensure text wraps correctly */
-            overflow-wrap: break-word; /* A newer property similar to word-wrap, recommended for future-proofing */
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         	}
     	</style>
 	</head>
@@ -73,7 +73,9 @@
 					<form id="CreateForm">
                         <div class="mb-3">
                             <label for="CustomerID" class="form-label">CustomerID: </label>
-                            <input type="text" class="form-control" name="CustomerID" id="CustomerID" required>
+                            <select class="form-control" name="CustomerID" id="CustomerID" required>
+								<?php include 'get_option.php'; ?>
+            				</select>
                         </div>
 						<div class="mb-3">
                             <label for="Date" class="form-label">Date: </label>
@@ -115,7 +117,9 @@
                         </div>
 						<div class="mb-3">
                             <label for="CustomerID" class="form-label">CustomerID: </label>
-                            <input type="text" class="form-control" name="CustomerID" id="CustomerID" required>
+                            <select class="form-control" name="CustomerID" id="CustomerID" required>
+								<?php include 'get_option.php'; ?>
+            				</select>
                         </div>
 						<div class="mb-3">
                             <label for="Date" class="form-label">Date: </label>
@@ -163,7 +167,7 @@
 
 		function descriptionFormatter(value, row, index){
 			if(!value) return '';
-				var maxLength = 25;
+				var maxLength = 40;
 			if(value.length > maxLength){
 				return value.substring(0, maxLength) + 
 					'...<button class="btn btn-secondary btn-sm readmore-button">Read more</button>';
@@ -317,14 +321,13 @@
 		}
 
 		// Modal button
-		$(document).ready(function(){
+		$(document).ready(function(){	
 			// Create button
             $('#CreateForm').submit(function(event){
                 var CustomerID = $('#CreateForm #CustomerID').val();
 				var Date = $('#CreateForm #Date').val();
-				var Mode = $('#CreateForm #Mode').val();
+				var Mode = $('#CreateForm #Mode:checked').val();
 				var Description = $('#CreateForm #Description').val();
-
 				$.ajax({
                     url: 'Create.php',
                     method: 'POST',
@@ -354,7 +357,7 @@
 				var InteractionID = $('#UpdateForm #InteractionID').text();
                 var CustomerID = $('#UpdateForm #CustomerID').val();
 				var Date = $('#UpdateForm #Date').val();
-				var Mode = $('#UpdateForm #Mode').val();
+				var Mode = $('#UpdateForm #Mode:checked').val();
 				var Description = $('#UpdateForm #Description').val();
 				$.ajax({
                     url: 'Update.php',
