@@ -72,11 +72,11 @@
                         </div>
 						<div class="mb-3">
                             <label for="Email" class="form-label">Email: </label>
-                            <input type="text" class="form-control" name="Email" id="Email" required>
+                            <input type="email" class="form-control" name="Email" id="Email" required>
                         </div>
 						<div class="mb-3">
                             <label for="PhoneNumber" class="form-label">Phone Number: </label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
+                            <input type="tel" pattern="09[0-9]{8}" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
                         </div>
 						<div class="mb-3">
                             <label for="Address" class="form-label">Address: </label>
@@ -120,11 +120,11 @@
                         </div>
 						<div class="mb-3">
                             <label for="Email" class="form-label">Email: </label>
-                            <input type="text" class="form-control" name="Email" id="Email" required>
+                            <input type="email" class="form-control" name="Email" id="Email" required>
                         </div>
 						<div class="mb-3">
                             <label for="PhoneNumber" class="form-label">Phone Number: </label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
+                            <input type="tel" pattern="09[0-9]{8}" class="form-control" name="PhoneNumber" id="PhoneNumber" required>
                         </div>
 						<div class="mb-3">
                             <label for="Address" class="form-label">Address: </label>
