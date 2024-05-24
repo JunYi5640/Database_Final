@@ -1,4 +1,4 @@
-<!-- TODO: CustomerID can be search and select in create and update form -->
+<!-- TODO: Resolution Date should be NULL and Only in Complete status can be input-->
 
 <!doctype html>
 <html lang="en">
@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>Customer Interaction Management</title>
+		<title>Customer Request Management</title>
 		<!--- including --->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -28,15 +28,15 @@
 	</head>
 
 	<body>
-	<!-- Customer Interaction Table -->
+	<!-- Customer Request Table -->
 	<div class = "container mb-4 mt-4" style = "max-width:1400px">
-		<h2><b>Customer Interaction Log</b></h2>
+		<h2><b>Customer Request Table</b></h2>
 		<table
 			id="table"
 			data-toggle="table"
 			data-url="Select.php"
 			data-buttons="buttons"
-			data-sort-name="InteractionID" 
+			data-sort-name="RequestID" 
       		data-sort-order="asc" 
 			data-pagination="true"
 			data-side-pagination="server"
@@ -50,23 +50,25 @@
 		<thead>
 			<tr>
 			<th data-field="state" data-checkbox="true"></th>
-			<th data-field="InteractionID" data-sortable="true">ID</th>
+			<th data-field="RequestID" data-sortable="true">ID</th>
 			<th data-field="CustomerID" data-sortable="true">CustomerID</th>
-			<th data-field="Date" data-sortable="true">Date</th>
-			<th data-field="Mode">Mode</th>
-			<th data-field="Description" data-formatter="descriptionFormatter" data-events="actionEvents">Description</th>
+			<th data-field="ProductID" data-sortable="true">ProductID</th>
+			<th data-field="RequestDate">Request Date</th>
+			<th data-field="ResolutionDate">Resolution Date</th>
+			<th data-field="Status">Status</th>
+			<th data-field="IssueDescription" data-formatter="descriptionFormatter" data-events="actionEvents">Description</th>
 			<th data-field="action" data-formatter="actionFormatter" data-events="actionEvents" algin = "center">Action</th>
 			</tr>
 		</thead>
 		</table>
 	</div>
 
-	<!-- Create Customer Interaction Modal -->
+	<!-- Create Customer Request Modal -->
 	<div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="CreateModalLabel">Create New Customer Interaction</h5>
+                    <h5 class="modal-title" id="CreateModalLabel">Create New Customer Request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -78,21 +80,31 @@
             				</select>
                         </div>
 						<div class="mb-3">
-                            <label for="Date" class="form-label">Date: </label>
-                            <input type="date" class="form-control" name="Date" id="Date" required>
+                            <label for="ProductID" class="form-label">ProductID: </label>
+                            <select class="form-control" name="ProductID" id="ProductID" required>
+								<?php include '../get_product.php'; ?>
+            				</select>
                         </div>
 						<div class="mb-3">
-                            <label for="Mode" class="form-label">Mode: </label>
-                            <input type="radio" name="Mode" id="Mode" value="Email" checked/>
-							<label for="Email">Email</label>
-							<input type="radio" name="Mode" id="Mode" value="Phone"/>
-    						<label for="Phone">Phone</label>
-							<input type="radio" name="Mode" id="Mode" value="In-Person"/>
-							<label for="In-Person">In-Person</label><br>
+                            <label for="RequestDate" class="form-label">Request Date: </label>
+                            <input type="date" class="form-control" name="RequestDate" id="RequestDate" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Description" class="form-label">Description: </label>
-                            <textarea class="form-control" name="Description" id="Description" required></textarea>
+                            <label for="ResolutionDate" class="form-label">Resolution Date: </label>
+                            <input type="date" class="form-control" name="ResolutionDate" id="ResolutionDate">
+                        </div>
+						<div class="mb-3">
+                            <label for="Status" class="form-label">Mode: </label>
+                            <input type="radio" name="Status" id="Status" value="Submitted" checked/>
+							<label for="Email">Submitted</label>
+							<input type="radio" name="Status" id="Status" value="In-Progress"/>
+    						<label for="In-Progress">In-Progress</label>
+							<input type="radio" name="Status" id="Status" value="Completed"/>
+							<label for="Completed">Completed</label><br>
+                        </div>
+						<div class="mb-3">
+                            <label for="IssueDescription" class="form-label">Issue Description: </label>
+                            <textarea class="form-control" name="IssueDescription" id="IssueDescription" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -101,19 +113,19 @@
         </div>
     </div>
 
-	<!-- Update Interaction form -->
+	<!-- Update Request form -->
 	<div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="UpdateModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="UpdateModalLabel">Interaction</h5>
+                    <h5 class="modal-title" id="UpdateModalLabel">Request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 					<form id="UpdateForm">
 						<div class="mb-3">
-							<label for="InteractionID" class="form-label">InteractionID: </label>
-							<b><span id="InteractionID"></span></b>
+							<label for="RequestID" class="form-label">RequestID: </label>
+							<b><span id="RequestID"></span></b>
                         </div>
 						<div class="mb-3">
                             <label for="CustomerID" class="form-label">CustomerID: </label>
@@ -122,21 +134,31 @@
             				</select>
                         </div>
 						<div class="mb-3">
-                            <label for="Date" class="form-label">Date: </label>
-                            <input type="date" class="form-control" name="Date" id="Date" required>
+                            <label for="ProductID" class="form-label">ProductID: </label>
+                            <select class="form-control" name="ProductID" id="ProductID" required>
+								<?php include '../get_product.php'; ?>
+            				</select>
                         </div>
 						<div class="mb-3">
-                            <label for="Mode" class="form-label">Mode: </label>
-                            <input type="radio" name="Mode" id="Mode" value="Email"/>
-							<label for="Email">Email</label>
-							<input type="radio" name="Mode" id="Mode" value="Phone"/>
-    						<label for="Phone">Phone</label>
-							<input type="radio" name="Mode" id="Mode" value="In-Person"/>
-							<label for="In-Person">In-Person</label><br>
+                            <label for="RequestDate" class="form-label">Request Date: </label>
+                            <input type="date" class="form-control" name="RequestDate" id="RequestDate" required>
                         </div>
 						<div class="mb-3">
-                            <label for="Description" class="form-label">Description: </label>
-                            <textarea class="form-control" name="Description" id="Description" required></textarea>
+                            <label for="ResolutionDate" class="form-label">Resolution Date: </label>
+                            <input type="date" class="form-control" name="ResolutionDate" id="ResolutionDate">
+                        </div>
+						<div class="mb-3">
+                            <label for="Status" class="form-label">Mode: </label>
+                            <input type="radio" name="Status" id="Status" value="Submitted" checked/>
+							<label for="Email">Submitted</label>
+							<input type="radio" name="Status" id="Status" value="In-Progress"/>
+    						<label for="In-Progress">In-Progress</label>
+							<input type="radio" name="Status" id="Status" value="Completed"/>
+							<label for="Completed">Completed</label><br>
+                        </div>
+						<div class="mb-3">
+                            <label for="IssueDescription" class="form-label">Issue Description: </label>
+                            <textarea class="form-control" name="IssueDescription" id="IssueDescription" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -145,12 +167,12 @@
         </div>
     </div>
 
-	<!-- Description Interaction -->
+	<!-- Description Request -->
 	<div class="modal fade" id="DescriptionModal" tabindex="-1" aria-labelledby="DescriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="DescriptionModalLabel">Description of InteractionID: <span id="InteractionIDLabel"></span></h5> 
+                    <h5 class="modal-title" id="DescriptionModalLabel">Description of RequestID: <span id="RequestIDLabel"></span></h5> 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -196,11 +218,13 @@
 			// Update button
         	'click .update-button': function(e, value, row, index){
 				$('#UpdateModal').on('show.bs.modal', function(e){
-					$('#UpdateForm #InteractionID').text(row.InteractionID);
+					$('#UpdateForm #RequestID').text(row.RequestID);
 					$('#UpdateForm input[name="CustomerID"]').val(row.CustomerID);
-					$('#UpdateForm input[name="Date"]').val(row.Date);
-					$('#UpdateForm input[name="Mode"][value="' + row.Mode + '"]').prop('checked', true);
-					$('#UpdateForm textarea[name="Description"]').val(row.Description);
+					$('#UpdateForm input[name="ProductID"]').val(row.ProductID);
+					$('#UpdateForm input[name="RequestDate"]').val(row.RequestDate);
+					$('#UpdateForm input[name="ResolutionDate"]').val(row.ResolutionDate);
+					$('#UpdateForm input[name="Status"][value="' + row.Status + '"]').prop('checked', true);
+					$('#UpdateForm textarea[name="IssueDescription"]').val(row.IssueDescription);
 				});
 				$('#UpdateModal').modal('show');
         	},
@@ -211,30 +235,30 @@
                     url: 'Delete.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {ids: [row.InteractionID]},
+                    data: {ids: [row.RequestID]},
                     success: function(response){
 						if(response.success){
 							$table.bootstrapTable('remove', {
-                            field: 'InteractionID',
-                            values: row.InteractionID
+                            field: 'RequestID',
+                            values: row.RequestID
                         	});
 							$table.bootstrapTable('refresh')
-							alert('Interaction deleted successfully');
+							alert('Request deleted successfully');
 						}
 						else{
-							alert('Interaction deleted Failed');
+							alert('Request deleted Failed');
 						}
                                 
                     },
                 	error: function(){
-                        alert('An error occurred while deleting interaction');
+                        alert('An error occurred while deleting request');
                     }
             	});
         	},
 
 			'click .readmore-button': function(e, value, row, index){
 				$('#DescriptionModal').on('show.bs.modal', function(e){
-					$('#InteractionIDLabel').text(row.InteractionID)
+					$('#RequestIDLabel').text(row.RequestID)
 					$('#DescriptionLabel').text(value);
 				});
 				$('#DescriptionModal').modal('show');
@@ -252,11 +276,11 @@
 			};
 		}
 
-		// Get all selected row's InteractionID
+		// Get all selected row's RequestID
 		var $table = $('#table')
 		function getSelections(){
     		return $.map($table.bootstrapTable('getSelections'), function(row){
-      			return row.InteractionID
+      			return row.RequestID
     		})
   		}
 		
@@ -266,21 +290,21 @@
 
 			// Create button
 			btnCreate:{
-				text: 'Create interaction',
+				text: 'Create request',
 				icon: 'bi bi-cart-plus-fill',
 				event: function(){
 					// Create button event
 					$('#CreateModal').modal('show');
 				},
 				attributes:{
-					title: 'Create new interaction',
+					title: 'Create new request',
 					class: 'btn btn-primary btn-lg',
 				}
 			},
 
 			// Delete Button
 			btnDelete:{
-				text: 'Delete interaction',
+				text: 'Delete request',
 				icon: 'bi bi-cart-dash-fill',
 				event: function(){
 					// Delete button event
@@ -295,25 +319,25 @@
                             success: function(response){
 								if(response.success){
 									$table.bootstrapTable('remove', {
-                                    field: 'InteractionID',
+                                    field: 'RequestID',
                                     values: ids
                                 	});
 									$table.bootstrapTable('refresh')
-                                	alert('Interaction deleted successfully');
+                                	alert('Request deleted successfully');
 								}
 								else{
-									alert('Interaction deleted Failed');
+									alert('Request deleted Failed');
 								}
                                 
                             },
                             error: function(){
-                                alert('An error occurred while deleting interaction');
+                                alert('An error occurred while deleting request');
                             }
                         });
 					}
 				},
 				attributes:{
-				title: 'Delete selected interaction',
+				title: 'Delete selected request',
 				class: 'btn btn-primary btn-lg'
 				}
 			}
@@ -325,28 +349,33 @@
 			// Create button
             $('#CreateForm').submit(function(event){
                 var CustomerID = $('#CreateForm #CustomerID').val();
-				var Date = $('#CreateForm #Date').val();
-				var Mode = $('#CreateForm #Mode:checked').val();
-				var Description = $('#CreateForm #Description').val();
+				var ProductID = $('#CreateForm #ProductID').val();
+				var RequestDate = $('#CreateForm #RequestDate').val();
+				var ResolutionDate = $('#CreateForm #ResolutionDate').val();
+				var Status = $('#CreateForm #Status:checked').val();
+				var IssueDescription = $('#CreateForm #IssueDescription').val();
+				
 				$.ajax({
                     url: 'Create.php',
                     method: 'POST',
 					dataType: 'json',
                     data: {CustomerID: CustomerID,
-						   Date: Date,
-						   Mode: Mode,
-						   Description: Description
+						   ProductID: ProductID,
+						   RequestDate: RequestDate,
+						   ResolutionDate: ResolutionDate,
+						   Status: Status,
+						   IssueDescription: IssueDescription
 					},
                     success: function(response){
 						if(response.success){
-							alert("Interaction created successfully");
+							alert("Request created successfully");
 						}
 						else{
-							alert("Interaction created failed");
+							alert("Request created failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while creating interaction');
+                        alert('An error occurred while creating request');
                     }
                 });
                 $('#CreateModal').modal('hide');
@@ -354,31 +383,35 @@
 
 			// Update button
 			$('#UpdateForm').submit(function(event){
-				var InteractionID = $('#UpdateForm #InteractionID').text();
-                var CustomerID = $('#UpdateForm #CustomerID').val();
-				var Date = $('#UpdateForm #Date').val();
-				var Mode = $('#UpdateForm #Mode:checked').val();
-				var Description = $('#UpdateForm #Description').val();
+				var RequestID = $('#UpdateForm #RequestID').text();
+				var CustomerID = $('#UpdateForm #CustomerID').val();
+				var ProductID = $('#UpdateForm #ProductID').val();
+				var RequestDate = $('#UpdateForm #RequestDate').val();
+				var ResolutionDate = $('#UpdateForm #ResolutionDate').val();
+				var Status = $('#UpdateForm #Status:checked').val();
+				var IssueDescription = $('#UpdateForm #IssueDescription').val();
 				$.ajax({
                     url: 'Update.php',
                     method: 'POST',
 					dataType: 'json',
-                    data: {InteractionID: InteractionID,
+                    data: {RequestID: RequestID,
 						   CustomerID: CustomerID,
-						   Date: Date,
-						   Mode: Mode,
-						   Description: Description
+						   ProductID: ProductID,
+						   RequestDate: RequestDate,
+						   ResolutionDate: ResolutionDate,
+						   Status: Status,
+						   IssueDescription: IssueDescription
 					},
                     success: function(response){
 						if(response.success){
-							alert("Interaction updated successfully");
+							alert("Request updated successfully");
 						}
 						else{
-							alert("Interaction updated failed");
+							alert("Request updated failed");
 						}
                     },
                     error: function(){
-                        alert('An error occurred while updating interaction');
+                        alert('An error occurred while updating request');
                     }
                 }); 
                 $('#UpdateModal').modal('hide');

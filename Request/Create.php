@@ -1,0 +1,42 @@
+<?php
+
+    header('Content-Type: application/json');
+
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "Final_project";
+
+    $db = new mysqli($host, $username, $password, $dbname);
+    if($db->connect_error)  die("Connection Failed ". $db->connect_error);
+    else    /*echo "Connection Successful"*/;
+
+    $db->begin_transaction();
+
+    $table = "servicerequests";
+
+    try{
+        $CustomerID = $_REQUEST['CustomerID'];
+        $ProductID = $_REQUEST['ProductID'];
+        $IssueDescription = $_REQUEST['IssueDescription'];
+        $RequestDate = $_REQUEST['RequestDate'];
+        $ResolutionDate = $_REQUEST['ResolutionDate'];
+        $Status = $_REQUEST['Status'];
+
+        if($Status != "Completed") $ResolutionDate = NULL;
+        
+        $sql = "INSERT INTO $table(CustomerID, ProductID, IssueDescription, RequestDate, ResolutionDate, Status)
+                VALUES('$CustomerID', '$ProductID', '$IssueDescription', '$RequestDate', '$ResolutionDate', '$Status')";
+        if($db->query($sql) === FALSE){
+            throw new Exception();
+        }
+        
+        $db->commit();
+        echo json_encode(["success" => TRUE]);
+    }
+    catch(Exception $e){
+        $db->rollback();
+        echo json_encode(["success" => FALSE]);
+    }
+    $db->close();
+?>
