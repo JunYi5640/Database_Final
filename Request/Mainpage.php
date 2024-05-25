@@ -222,8 +222,8 @@
         	'click .update-button': function(e, value, row, index){
 				$('#UpdateModal').on('show.bs.modal', function(e){
 					$('#UpdateForm #RequestID').text(row.RequestID);
-					$('#UpdateForm input[name="CustomerID"]').val(row.CustomerID);
-					$('#UpdateForm input[name="ProductID"]').val(row.ProductID);
+					$('#UpdateForm select[name="CustomerID"]').val(row.CustomerID);
+					$('#UpdateForm select[name="ProductID"]').val(row.ProductID);
 					$('#UpdateForm input[name="RequestDate"]').val(row.RequestDate);
 					$('#UpdateForm input[name="ResolutionDate"]').val(row.ResolutionDate);
 					$('#UpdateForm input[name="Status"][value="' + row.Status + '"]').prop('checked', true);

@@ -184,7 +184,7 @@
         	'click .update-button': function(e, value, row, index){
 				$('#UpdateModal').on('show.bs.modal', function(e){
 					$('#UpdateForm #OrderID').text(row.OrderID);
-					$('#UpdateForm input[name="CustomerID"]').val(row.CustomerID);
+					$('#UpdateForm select[name="CustomerID"]').val(row.CustomerID);
 					$('#UpdateForm input[name="OrderDate"]').val(row.OrderDate);
 					$('#UpdateForm input[name="PaymentStatus"][value="' + row.PaymentStatus + '"]').prop('checked', true);
                     $('#UpdateForm input[name="DeliveryStatus"][value="' + row.DeliveryStatus + '"]').prop('checked', true);

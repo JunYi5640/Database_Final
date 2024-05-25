@@ -195,7 +195,7 @@
         	'click .update-button': function(e, value, row, index){
 				$('#UpdateModal').on('show.bs.modal', function(e){
 					$('#UpdateForm #InteractionID').text(row.InteractionID);
-					$('#UpdateForm input[name="CustomerID"]').val(row.CustomerID);
+					$('#UpdateForm select[name="CustomerID"]').val(row.CustomerID);
 					$('#UpdateForm input[name="Date"]').val(row.Date);
 					$('#UpdateForm input[name="Mode"][value="' + row.Mode + '"]').prop('checked', true);
 					$('#UpdateForm textarea[name="Description"]').val(row.Description);
