@@ -25,11 +25,13 @@
         $ResolutionDate = $_REQUEST['ResolutionDate'];
         $Status = $_REQUEST['Status'];
 
-        if($Status != "Completed") $ResolutionDate = NULL;
 
         $sql = "UPDATE $table SET CustomerID = '$CustomerID', ProductID = '$ProductID', IssueDescription = '$IssueDescription',
-                RequestDate = '$RequestDate',  ResolutionDate = '$ResolutionDate', Status = '$Status'
-                WHERE RequestID = $RequestID";
+                RequestDate = '$RequestDate', Status = '$Status'";
+
+        if($Status == "Completed") $sql.= ", ResolutionDate = '$ResolutionDate'";
+        
+        $sql .= " WHERE RequestID = $RequestID";
              
         if($db->query($sql) === FALSE){
             throw new Exception();

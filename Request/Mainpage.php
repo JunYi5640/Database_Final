@@ -1,5 +1,3 @@
-<!-- TODO: Resolution Date should be NULL and Only in Complete status can be input-->
-
 <!doctype html>
 <html lang="en">
 	<head>
@@ -206,9 +204,14 @@
 					'<i class="bi bi-gear"></i>', 
 					'</button>',
 
-					'<button class="btn btn-danger  delete-button" >',
+					'<button class="btn btn-danger  delete-button" style="margin-right: 5px;">',
 					'<i class="bi bi-trash"></i>', 
 					'</button>',
+
+					'<button class="btn btn-info  status-button" >',
+					'<i class="bi bi-chevron-double-right"></i>', 
+					'</button>',
+
 				'</div>'
 			].join('');
 		}
@@ -242,7 +245,7 @@
                             field: 'RequestID',
                             values: row.RequestID
                         	});
-							$table.bootstrapTable('refresh')
+							$table.bootstrapTable('refresh');
 							alert('Request deleted successfully');
 						}
 						else{
@@ -252,6 +255,50 @@
                     },
                 	error: function(){
                         alert('An error occurred while deleting request');
+                    }
+            	});
+        	},
+
+			// Status button
+			'click .status-button': function(e, value, row, index){
+				if(row.Status == "Completed"){
+					alert("Request already Completed");
+					return;
+				}
+				else if(row.Status == "In-Progress"){
+					var newStatus = "Completed";
+					var today = new Date();
+					var newResolutionDate = today.getFullYear() + '-' + 
+               							 (String((today.getMonth() + 1)).padStart(2,'0')) + '-' + 
+               							 (String(today.getDate()).padStart(2,'0'));
+				}
+				else if(row.Status == "Submitted"){
+					var newStatus = "In-Progress";
+					var newResolutionDate = "0000-00-00";
+				}
+				$.ajax({
+                    url: 'Update.php',
+                    method: 'POST',
+					dataType: 'json',
+                    data: {RequestID: row.RequestID,
+						   CustomerID: row.CustomerID,
+						   ProductID: row.ProductID,
+						   RequestDate: row.RequestDate,
+						   ResolutionDate: newResolutionDate,
+						   Status: newStatus,
+						   IssueDescription: row.IssueDescription
+					},
+                    success: function(response){
+						if(response.success){
+							$table.bootstrapTable('refresh');
+							alert('Status changed successfully');
+						}
+						else{
+							alert('Status changed Failed');
+						}       
+                    },
+                	error: function(){
+                        alert('An error occurred while changing status');
                     }
             	});
         	},
@@ -322,7 +369,7 @@
                                     field: 'RequestID',
                                     values: ids
                                 	});
-									$table.bootstrapTable('refresh')
+									$table.bootstrapTable('refresh');
                                 	alert('Request deleted successfully');
 								}
 								else{

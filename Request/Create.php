@@ -23,10 +23,15 @@
         $ResolutionDate = $_REQUEST['ResolutionDate'];
         $Status = $_REQUEST['Status'];
 
-        if($Status != "Completed") $ResolutionDate = NULL;
-        
-        $sql = "INSERT INTO $table(CustomerID, ProductID, IssueDescription, RequestDate, ResolutionDate, Status)
+        if($Status != "Completed"){
+            $sql = "INSERT INTO $table(CustomerID, ProductID, IssueDescription, RequestDate, ResolutionDate, Status)
+                VALUES('$CustomerID', '$ProductID', '$IssueDescription', '$RequestDate', NULL, '$Status')";
+        }
+        else{
+            $sql = "INSERT INTO $table(CustomerID, ProductID, IssueDescription, RequestDate, ResolutionDate, Status)
                 VALUES('$CustomerID', '$ProductID', '$IssueDescription', '$RequestDate', '$ResolutionDate', '$Status')";
+        }
+        
         if($db->query($sql) === FALSE){
             throw new Exception();
         }
