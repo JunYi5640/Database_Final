@@ -1,5 +1,3 @@
-<!-- TODO: CustomerID can be search and select in create and update form -->
-
 <!doctype html>
 <html lang="en">
 	<head>
