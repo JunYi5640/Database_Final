@@ -1,5 +1,5 @@
 ## TODO
-- [ ] Finish Order detail front-end.
-- [ ] Test all table can work.
-- [ ] Add link at each mainpage.
-- [ ] Add Mainpage for system.
+- [x] Finish Order detail front-end.
+- [x] Test all table can work.
+- [x] Add link at each mainpage.
+- [x] Add Mainpage for system.
