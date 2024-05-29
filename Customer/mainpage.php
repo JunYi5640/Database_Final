@@ -30,7 +30,6 @@
         </nav>
     </header>
 	
-	<main>
 	<!-- Customer Table -->
 	<div class = "container mb-4 mt-4" style = "max-width:1400px">
 		<h2><b>Customer Table</b></h2>
@@ -158,8 +157,7 @@
             </div>
         </div>
     </div>
-	</main>
-
+	
 	<footer>
             <label>&copy; M11202108. 周鈞羿</lable>
     </footer>
